@@ -22,7 +22,7 @@ let Logo = styled.img`
 function Nav({ children }) {
   return (
     <Navigation>
-      <Logo src="https://shareditassets.s3.ap-northeast-2.amazonaws.com/production/uploads/product/logo/694/medium_%EC%9B%8D%EC%8A%A4_logo.png"></Logo>
+      <Logo src="url('/images/logo.png')"></Logo>
       {children}
     </Navigation>
   );

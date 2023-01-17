@@ -15,19 +15,39 @@ function searchCards(focused) {
   } else return 0;
 }
 
-// ++ focused 가 본인인지 확인하는 함수 필요. boolean 반환.
-//    <ProgramCard ... focused=함수명()>으로 사용
+function isFocused(line, focused, i) {
+  // ++ focused 가 본인인지 확인하는 함수 필요. boolean 반환.
+  //    <ProgramCard ... focused=함수명()>으로 사용
+  let parsed = "";
+  if (line == "000") {
+    //parsed 에 i -> "00i" 형태로 변환.
+    parsed = "00" + i;
+  } else if (line == "100") {
+    parsed = "10" + i;
+  } else if (line == "200") {
+    parsed = "20" + i;
+  }
+
+  if (parsed == focused) {
+    console.log(parsed + "is focused");
+  }
+  //focused, parsed 비교. 같으면 true 반환
+  return parsed == focused ? true : false;
+}
 
 function Home() {
   let [programs] = useState(programData);
   let [soons] = useState(soonData);
   let [focused, setFocused] = useState("000");
+
   const [ScrollY, setScrollY] = useState(0);
   const [ScrollX, setScrollX] = useState(0);
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
     setScrollX(window.pageXOffset);
   };
+
+  const [selected, setSelected] = useState("");
 
   useEffect(() => {
     console.log("ScrollY is", ScrollY);
@@ -58,10 +78,10 @@ function Home() {
                 console.log("focused on : " + focused);
               }}
               image={programs[i].image}
-              video={programs[i].video}
               title={programs[i].title}
               type={programs[i].type}
               views={programs[i].views}
+              focused={isFocused("000", focused, i)}
             ></ProgramCard>
           );
         })}
@@ -72,9 +92,9 @@ function Home() {
         time={soons[searchCards(focused)].time}
         title={soons[searchCards(focused)].title}
         image={
-          "url('https://github.com/hyojoongit/upluslive/blob/main/src/images/soonImages/soonThumbnail" +
+          "url('/images/soonImages/soonThumbnail" +
           (searchCards(focused) + 1) +
-          ".png?raw=true')"
+          ".png')"
         }
         description={soons[0].description}
       >
@@ -88,11 +108,9 @@ function Home() {
                 }}
                 color={soons[i].color}
                 image={
-                  "url('https://github.com/hyojoongit/upluslive/blob/main/src/images/soonImages/soonThumbnail" +
-                  (i + 1) +
-                  ".png?raw=true')"
+                  "url('/images/soonImages/soonThumbnail" + (i + 1) + ".png')"
                 }
-                idx={i}
+                focused={isFocused(100, focused, i)}
               ></SoonCard>
             );
           })}
@@ -104,10 +122,15 @@ function Home() {
         {programs.map(function (a, i) {
           return (
             <ProgramCard
+              onClick={() => {
+                setFocused(programs[i].id);
+                console.log("focused on : " + focused);
+              }}
               image={programs[i].image}
               title={programs[i].title}
               type={programs[i].type}
               views={programs[i].views}
+              focused={isFocused("000", focused, i)}
             ></ProgramCard>
           );
         })}
@@ -118,10 +141,15 @@ function Home() {
         {programs.map(function (a, i) {
           return (
             <ProgramCard
+              onClick={() => {
+                setFocused(programs[i].id);
+                console.log("focused on : " + focused);
+              }}
               image={programs[i].image}
               title={programs[i].title}
               type={programs[i].type}
               views={programs[i].views}
+              focused={isFocused("000", focused, i)}
             ></ProgramCard>
           );
         })}

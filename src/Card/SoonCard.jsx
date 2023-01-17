@@ -24,6 +24,13 @@ let Card = styled.div`
   width: ${(props) => (props.foucused ? "240px" : "184px")};
   opacity: ${(props) => (props.focused ? "1" : "1")};
   margin: ${(props) => (props.focused ? "0" : "21px 20px 0 0")};
+  /* transform: ${(props) => (props.focused ? "translateX(-28px)" : "none")};
+  box-shadow: ${(props) =>
+    props.focused
+      ? "0px 10px 40px 20px rgba(9, 13, 25, 0.4), inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2)"
+      : "inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2)"};
+  z-index: ${(props) => (props.focused ? "0" : "1")};
+  transition: ${(props) => (props.focused ? "ease-in-out 0.15s" : "0")}; */
 
   &:hover {
     margin: 0;

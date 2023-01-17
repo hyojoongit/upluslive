@@ -32,7 +32,21 @@ let Card = styled.div`
   opacity: 80%;
   margin-top: 34px;
   box-shadow: inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
-  &:hover {
+
+  ${(p) =>
+    p.focused &&
+    css`
+      background-size: auto 612px;
+      margin: 0;
+      transform: translateX(-20px);
+      box-shadow: 0px 10px 60px 40px rgba(9, 13, 25, 0.4),
+        inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
+      width: 360px;
+      height: 612px;
+      transition: ease-in-out 0.15s;
+      opacity: 100%;
+      z-index: 1;
+    `}/* &:hover {
     background-size: auto 612px;
     margin: 0;
     transform: translateX(-20px);
@@ -43,7 +57,7 @@ let Card = styled.div`
     transition: ease-in-out 0.15s;
     opacity: 100%;
     z-index: 1;
-  }
+  } */
 `;
 
 let TopStampArea = styled.div`
@@ -61,6 +75,7 @@ let TopStampArea = styled.div`
   font-weight: 900;
   color: #eee;
   background-color: rgba(9, 13, 25, 0.6);
+  backdrop-filter: blur(10px);
 `;
 
 let TopStamp = styled.div`
@@ -76,12 +91,13 @@ let BottomStampArea = styled.div`
   width: 100px;
   height: 40px;
   background-color: rgba(9, 13, 25, 0.6);
+  backdrop-filter: blur(10px);
 `;
 
 let TitleArea = styled.div`
   box-sizing: border-box;
   position: absolute;
-  background: linear-gradient(rgb(0, 0, 0, 0), rgb(0, 0, 0, 0.6) 60%);
+  background: linear-gradient(rgb(0, 0, 0, 0), rgb(0, 0, 0, 0.7) 60%);
   padding: 20px;
   bottom: 0px;
   width: 100%;
@@ -90,6 +106,7 @@ let TitleArea = styled.div`
 `;
 
 let Title = styled.p`
+  display: -webkit-box;
   position: absolute;
   bottom: 20px;
   width: calc(100% - 40px);
@@ -106,7 +123,7 @@ let Title = styled.p`
     p.focused &&
     css`
       font-size: 36px;
-      transition: 1s;
+      transition: 0.15s;
     `}
 `;
 
@@ -129,9 +146,9 @@ function ProgramCard({
           <TopStamp type={type}>{type}</TopStamp>
           {views}
         </TopStampArea>
-        <TitleArea>
+        <TitleArea focused={focused}>
           <BottomStampArea></BottomStampArea>
-          <Title>{title}</Title>
+          <Title focused={focused}>{title}</Title>
         </TitleArea>
       </Card>
     </Frame>
