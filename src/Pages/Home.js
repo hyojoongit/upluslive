@@ -15,7 +15,7 @@ function searchCards(focused) {
   } else return 0;
 }
 
-// ++ focused 가 본인인지 확인하는 함수. boolean 반환.
+// ++ focused 가 본인인지 확인하는 함수 필요. boolean 반환.
 //    <ProgramCard ... focused=함수명()>으로 사용
 
 function Home() {
@@ -35,7 +35,10 @@ function Home() {
                 console.log("focused on : " + focused);
               }}
               image={programs[i].image}
+              video={programs[i].video}
               title={programs[i].title}
+              type={programs[i].type}
+              views={programs[i].views}
             ></ProgramCard>
           );
         })}
@@ -56,6 +59,11 @@ function Home() {
                   console.log("focused on : " + focused);
                 }}
                 color={soons[i].color}
+                image={
+                  "url('src/images/soonImages/soonThumbnail" +
+                  (i + 1) +
+                  ".png')"
+                }
                 idx={i}
               ></SoonCard>
             );
@@ -70,6 +78,8 @@ function Home() {
             <ProgramCard
               image={programs[i].image}
               title={programs[i].title}
+              type={programs[i].type}
+              views={programs[i].views}
             ></ProgramCard>
           );
         })}
@@ -82,6 +92,8 @@ function Home() {
             <ProgramCard
               image={programs[i].image}
               title={programs[i].title}
+              type={programs[i].type}
+              views={programs[i].views}
             ></ProgramCard>
           );
         })}

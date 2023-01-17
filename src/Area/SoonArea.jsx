@@ -50,6 +50,12 @@ let Button = styled.button`
   height: 88px;
   color: #aeaeb2;
   background-color: #3e4154;
+  &:hover {
+    height: 100px;
+    color: #090d19;
+    background-color: #eee;
+    transition: ease-in-out 0.15s;
+  }
 `;
 
 function SoonArea({

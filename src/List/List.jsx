@@ -4,6 +4,7 @@ let HorizontalList = styled.ul`
   list-style: none;
   white-space: nowrap;
   overflow-x: auto;
+  overflow-y: visible;
   padding-left: 389px;
   text-align: left;
   margin: 0;

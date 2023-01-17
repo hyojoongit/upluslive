@@ -1,9 +1,15 @@
 import "./App.css";
 import Nav from "./Nav";
 import Home from "./Pages/Home";
+import Player from "./Pages/Player";
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import programData from "./programData.js";
+import soonData from "./soonData.js";
 
 function App() {
+  let [programs] = useState(programData);
+  let [soons] = useState(soonData);
   return (
     <div className="App">
       <SideNav />
@@ -13,6 +19,12 @@ function App() {
         <Route path="/soon"></Route>
         <Route path="/best"></Route>
         <Route path="/shorts"></Route>
+        <Route
+          path="/player/:id"
+          element={<Player programs={programs}></Player>}
+        ></Route>
+
+        <Route path="*" element={<div>페이지 없음</div>}></Route>
       </Routes>
     </div>
   );

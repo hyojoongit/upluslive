@@ -4,19 +4,19 @@ let Frame = styled.div`
   width: 184px;
   height: 180px;
   border-radius: 16px;
-  margin: 0 20px 0 0;
+  margin: 0 20px 60px 0;
   display: inline-block;
   position: relative;
   overflow: visible;
 `;
 
-
 let Card = styled.div`
-  background: ${(props) => props.color || "white"};
+  background-image: ${(props) => props.image};
   border-radius: 16px;
   display: inline-block;
   position: absolute;
   box-shadow: inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
+  overflow: hidden;
 
   height: ${(props) => (props.foucused ? "180px" : "138px")};
   width: ${(props) => (props.foucused ? "240px" : "184px")};
@@ -30,16 +30,21 @@ let Card = styled.div`
       inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
     width: 240px;
     height: 180px;
-    transition: ease-in-out 0.2s;
+    transition: ease-in-out 0.15s;
     opacity: 100%;
     z-index: 1;
   }
 `;
 
-function SoonCard({ onClick, color, focused = false }) {
+function SoonCard({ image, onClick, color, focused = false }) {
   return (
     <Frame>
-      <Card onClick={onClick} color={color} focused={focused}></Card>
+      <Card
+        image={image}
+        onClick={onClick}
+        color={color}
+        focused={focused}
+      ></Card>
     </Frame>
   );
 }

@@ -11,8 +11,12 @@ let Frame = styled.div`
 `;
 
 let Video = styled.video`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 360px;
   height: 612px;
+  display: none;
 `;
 
 let Card = styled.div`
@@ -36,22 +40,34 @@ let Card = styled.div`
       inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
     width: 360px;
     height: 612px;
-    transition: ease-in-out 0.2s;
+    transition: ease-in-out 0.15s;
     opacity: 100%;
     z-index: 1;
   }
 `;
 
 let TopStampArea = styled.div`
+  display: inline-flex;
   box-sizing: border-box;
   position: absolute;
+  text-align: center;
+  padding: 8px 12px;
+  margin-block: 0px;
   top: 20px;
   right: 20px;
   border-radius: 10px;
-  width: 100px;
-  height: 40px;
+  width: auto;
+  font-size: 20px;
+  font-weight: 900;
+  color: #eee;
   background-color: rgba(9, 13, 25, 0.6);
 `;
+
+let TopStamp = styled.div`
+  margin-right: 8px;
+  color: ${(props) => (props.type == "LIVE" ? "#FA5454" : "#eee")};
+`;
+
 let BottomStampArea = styled.div`
   box-sizing: border-box;
   position: relative;
@@ -74,7 +90,6 @@ let TitleArea = styled.div`
 `;
 
 let Title = styled.p`
-  color: whi;
   position: absolute;
   bottom: 20px;
   width: calc(100% - 40px);
@@ -95,11 +110,25 @@ let Title = styled.p`
     `}
 `;
 
-function ProgramCard({ image, title, onClick, focused = false }) {
+function ProgramCard({
+  image,
+  video,
+  type,
+  views,
+  title,
+  onClick,
+  focused = false,
+}) {
   return (
     <Frame>
       <Card onClick={onClick} image={image} focused={focused}>
-        <TopStampArea></TopStampArea>
+        <Video autoplay loop>
+          <source src={video} type="video/mp4"></source>
+        </Video>
+        <TopStampArea>
+          <TopStamp type={type}>{type}</TopStamp>
+          {views}
+        </TopStampArea>
         <TitleArea>
           <BottomStampArea></BottomStampArea>
           <Title>{title}</Title>
