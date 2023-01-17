@@ -6,12 +6,23 @@ let Area = styled.div`
 `;
 let Background = styled.div`
   position: absolute;
-  background-color: rgb(157, 191, 222);
-  background: linear-gradient(rgb(157, 191, 222, 0.6), rgb(9, 13, 25, 0.6) 90%);
+  background: linear-gradient(rgb(9, 13, 25, 0.4), rgb(9, 13, 25, 1) 85%);
   top: 89.5px;
   width: 100%;
-  height: 600px;
+  height: 720px;
   z-index: -1;
+  backdrop-filter: blur(100px);
+`;
+let BackgroundImg = styled.div`
+  position: absolute;
+  background-image: ${(props) => props.image};
+  background-repeat: no-repeat;
+  background-size: 1920px 600px;
+  top: 89.5px;
+  width: 100%;
+  height: 580px;
+  z-index: -2;
+  transition: 0.5s;
 `;
 
 let Contents = styled.div`
@@ -60,7 +71,7 @@ let Button = styled.button`
 
 function SoonArea({
   children,
-  color,
+  image,
   time,
   title,
   description,
@@ -77,6 +88,7 @@ function SoonArea({
           <Button>알림 예약</Button>
         </Contents>
       </Background>
+      <BackgroundImg image={image}></BackgroundImg>
     </Area>
   );
 }

@@ -1,6 +1,7 @@
 import "./App.css";
 import Nav from "./Nav";
 import Home from "./Pages/Home";
+import Live from "./Pages/Live";
 import Player from "./Pages/Player";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
@@ -15,7 +16,7 @@ function App() {
       <SideNav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/live"></Route>
+        <Route path="/live" element={<Live />} />
         <Route path="/soon"></Route>
         <Route path="/best"></Route>
         <Route path="/shorts"></Route>

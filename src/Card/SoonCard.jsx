@@ -11,7 +11,9 @@ let Frame = styled.div`
 `;
 
 let Card = styled.div`
+  background-color: rgba(9, 13, 25);
   background-image: ${(props) => props.image};
+  background-size: contain;
   border-radius: 16px;
   display: inline-block;
   position: absolute;
@@ -20,7 +22,7 @@ let Card = styled.div`
 
   height: ${(props) => (props.foucused ? "180px" : "138px")};
   width: ${(props) => (props.foucused ? "240px" : "184px")};
-  opacity: ${(props) => (props.focused ? "1" : "0.8")};
+  opacity: ${(props) => (props.focused ? "1" : "1")};
   margin: ${(props) => (props.focused ? "0" : "21px 20px 0 0")};
 
   &:hover {

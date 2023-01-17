@@ -1,9 +1,6 @@
 import programData from "../programData.js";
-import soonData from "../soonData.js";
 import { useState, useEffect } from "react";
 import ProgramCard from "../Card/ProgramCard";
-import SoonArea from "../Area/SoonArea";
-import SoonCard from "../Card/SoonCard";
 import HorizontalList from "../List/List";
 import SectionTitle from "../List/Title";
 
@@ -18,9 +15,8 @@ function searchCards(focused) {
 // ++ focused 가 본인인지 확인하는 함수 필요. boolean 반환.
 //    <ProgramCard ... focused=함수명()>으로 사용
 
-function Home() {
+function Live() {
   let [programs] = useState(programData);
-  let [soons] = useState(soonData);
   let [focused, setFocused] = useState("000");
   const [ScrollY, setScrollY] = useState(0);
   const [ScrollX, setScrollX] = useState(0);
@@ -48,7 +44,7 @@ function Home() {
 
   return (
     <div>
-      <SectionTitle>LIVE</SectionTitle>
+      <SectionTitle>아이폰</SectionTitle>
       <HorizontalList>
         {programs.map(function (a, i) {
           return (
@@ -59,52 +55,6 @@ function Home() {
               }}
               image={programs[i].image}
               video={programs[i].video}
-              title={programs[i].title}
-              type={programs[i].type}
-              views={programs[i].views}
-            ></ProgramCard>
-          );
-        })}
-      </HorizontalList>
-
-      <SectionTitle>LIVE 예고</SectionTitle>
-      <SoonArea
-        time={soons[searchCards(focused)].time}
-        title={soons[searchCards(focused)].title}
-        image={
-          "url('https://github.com/hyojoongit/upluslive/blob/main/src/images/soonImages/soonThumbnail" +
-          (searchCards(focused) + 1) +
-          ".png?raw=true')"
-        }
-        description={soons[0].description}
-      >
-        <HorizontalList>
-          {soons.map(function (a, i) {
-            return (
-              <SoonCard
-                onClick={() => {
-                  setFocused(soons[i].id);
-                  console.log("focused on : " + focused);
-                }}
-                color={soons[i].color}
-                image={
-                  "url('https://github.com/hyojoongit/upluslive/blob/main/src/images/soonImages/soonThumbnail" +
-                  (i + 1) +
-                  ".png?raw=true')"
-                }
-                idx={i}
-              ></SoonCard>
-            );
-          })}
-        </HorizontalList>
-      </SoonArea>
-
-      <SectionTitle>아이폰</SectionTitle>
-      <HorizontalList>
-        {programs.map(function (a, i) {
-          return (
-            <ProgramCard
-              image={programs[i].image}
               title={programs[i].title}
               type={programs[i].type}
               views={programs[i].views}
@@ -126,8 +76,36 @@ function Home() {
           );
         })}
       </HorizontalList>
+
+      <SectionTitle>인터넷 & TV</SectionTitle>
+      <HorizontalList>
+        {programs.map(function (a, i) {
+          return (
+            <ProgramCard
+              image={programs[i].image}
+              title={programs[i].title}
+              type={programs[i].type}
+              views={programs[i].views}
+            ></ProgramCard>
+          );
+        })}
+      </HorizontalList>
+
+      <SectionTitle>태블릿 & 워치</SectionTitle>
+      <HorizontalList>
+        {programs.map(function (a, i) {
+          return (
+            <ProgramCard
+              image={programs[i].image}
+              title={programs[i].title}
+              type={programs[i].type}
+              views={programs[i].views}
+            ></ProgramCard>
+          );
+        })}
+      </HorizontalList>
     </div>
   );
 }
 
-export default Home;
+export default Live;
