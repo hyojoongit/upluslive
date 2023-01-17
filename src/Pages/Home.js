@@ -15,22 +15,35 @@ function searchCards(focused) {
   } else return 0;
 }
 
+function parseToId(num) {
+  if (num >= 0 && num <= 9) {
+    return "00" + num;
+  } else if (num >= 10 && num <= 99) {
+    return "0" + num;
+  } else if (num >= 100 && num <= 999) {
+    return num;
+  } else {
+    console.log("Cannot parse to Id : id over 999");
+    return;
+  }
+}
+
 function isFocused(line, focused, i) {
   // ++ focused 가 본인인지 확인하는 함수 필요. boolean 반환.
   //    <ProgramCard ... focused=함수명()>으로 사용
   let parsed = "";
   if (line == "000") {
     //parsed 에 i -> "00i" 형태로 변환.
-    parsed = "00" + i;
+    parsed = parseToId(i);
   } else if (line == "100") {
-    parsed = "10" + i;
+    parsed = parseToId(100 + i);
   } else if (line == "200") {
-    parsed = "20" + i;
+    parsed = parseToId(200 + i);
   }
 
-  if (parsed == focused) {
-    console.log(parsed + "is focused");
-  }
+  // if (parsed == focused) {
+  //   console.log(parsed + "is focused");
+  // }
   //focused, parsed 비교. 같으면 true 반환
   return parsed == focused ? true : false;
 }
@@ -40,31 +53,48 @@ function Home() {
   let [soons] = useState(soonData);
   let [focused, setFocused] = useState("000");
 
-  const [ScrollY, setScrollY] = useState(0);
-  const [ScrollX, setScrollX] = useState(0);
-  const handleFollow = () => {
-    setScrollY(window.pageYOffset);
-    setScrollX(window.pageXOffset);
-  };
-
-  const [selected, setSelected] = useState("");
-
   useEffect(() => {
-    console.log("ScrollY is", ScrollY);
-  }, [ScrollY]);
-  useEffect(() => {
-    console.log("ScrollX is", ScrollX);
-  }, [ScrollX]);
-
-  useEffect(() => {
-    const watch = () => {
-      window.addEventListener("scroll", handleFollow);
-    };
-    watch();
+    function handleKeyDown(e) {
+      if (e.keyCode === 38 && focused >= 100) {
+        setFocused(
+          parseToId(parseInt(focused) - 100 - (parseInt(focused) % 100))
+        );
+      } else if (e.keyCode === 40) {
+        setFocused(
+          parseToId(parseInt(focused) + 100 - (parseInt(focused) % 100))
+        );
+      } else if (e.keyCode === 37 && focused > 0) {
+        setFocused(parseToId(parseInt(focused) - 1));
+      } else if (e.keyCode === 39) {
+        setFocused(parseToId(parseInt(focused) + 1));
+      }
+      console.log(">>>activate");
+    }
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener("scroll", handleFollow);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  });
+  }, [focused]);
+
+  useEffect(() => {
+    const element = document.getElementById(focused);
+    // const { top, left } = element.getBoundingClientRect();
+    // window.scrollTo({
+    //   top: top + window.scrollY - 181,
+    //   left: left + window.scrollX - 389,
+    //   behavior: "smooth",
+    // });
+    // if (element) {
+    if (focused) {
+      console.log("scrollIntoView");
+      console.log("element:", element.getClientRects());
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "start",
+      });
+    } else console.log("element to scroll not found");
+  }, [focused]);
 
   return (
     <div>
@@ -77,6 +107,7 @@ function Home() {
                 setFocused(programs[i].id);
                 console.log("focused on : " + focused);
               }}
+              id={programs[i].id}
               image={programs[i].image}
               title={programs[i].title}
               type={programs[i].type}
@@ -106,11 +137,12 @@ function Home() {
                   setFocused(soons[i].id);
                   console.log("focused on : " + focused);
                 }}
+                id={soons[i].id}
                 color={soons[i].color}
                 image={
                   "url('/images/soonImages/soonThumbnail" + (i + 1) + ".png')"
                 }
-                focused={isFocused(100, focused, i)}
+                focused={isFocused("100", focused, i)}
               ></SoonCard>
             );
           })}
@@ -126,11 +158,12 @@ function Home() {
                 setFocused(programs[i].id);
                 console.log("focused on : " + focused);
               }}
+              id={programs[i].id}
               image={programs[i].image}
               title={programs[i].title}
               type={programs[i].type}
               views={programs[i].views}
-              focused={isFocused("000", focused, i)}
+              focused={isFocused("300", focused, i)}
             ></ProgramCard>
           );
         })}
@@ -145,11 +178,12 @@ function Home() {
                 setFocused(programs[i].id);
                 console.log("focused on : " + focused);
               }}
+              id={programs[i].id}
               image={programs[i].image}
               title={programs[i].title}
               type={programs[i].type}
               views={programs[i].views}
-              focused={isFocused("000", focused, i)}
+              focused={isFocused("400", focused, i)}
             ></ProgramCard>
           );
         })}

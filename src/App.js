@@ -11,6 +11,7 @@ import soonData from "./soonData.js";
 function App() {
   let [programs] = useState(programData);
   let [soons] = useState(soonData);
+
   return (
     <div className="App">
       <SideNav />

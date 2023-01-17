@@ -8,6 +8,7 @@ let Frame = styled.div`
   display: inline-block;
   position: relative;
   overflow: visible;
+  scroll-margin: 389px;
 `;
 
 let Video = styled.video`
@@ -128,6 +129,7 @@ let Title = styled.p`
 `;
 
 function ProgramCard({
+  id,
   image,
   video,
   type,
@@ -137,7 +139,7 @@ function ProgramCard({
   focused = false,
 }) {
   return (
-    <Frame>
+    <Frame id={id}>
       <Card onClick={onClick} image={image} focused={focused}>
         <Video autoplay loop>
           <source src={video} type="video/mp4"></source>

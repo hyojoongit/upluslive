@@ -89,7 +89,7 @@ let data = [
   },
 
   {
-    id: "010",
+    id: "200",
     image:
       "url(https://dhdfh3vybe18.cloudfront.net/broadcast/lg-uplus/lklg-uplus-b136e2b562e247a194915a2a5184dedd/thum/972a9400-5ea4-4ac3-8596-6484260e112a.png?h=732&w=548&f=jpg)",
     title: "(재입고)갤럭시 S20 중고폰 시리즈",
@@ -98,7 +98,31 @@ let data = [
   },
 
   {
-    id: "011",
+    id: "201",
+    image:
+      "url(https://dhdfh3vybe18.cloudfront.net/broadcast/lg-uplus/lklg-uplus-3ec5fd0a4e14430fa8fb096890781237/thum/a70d10e7-bee3-4a63-a484-9e4aad10ad8a.jpg?h=732&w=548&f=jpg)",
+    title: "유독",
+    type: "LIVE",
+    views: 11000,
+  },
+  {
+    id: "202",
+    image:
+      "url(https://dhdfh3vybe18.cloudfront.net/broadcast/lg-uplus/lklg-uplus-3ec5fd0a4e14430fa8fb096890781237/thum/a70d10e7-bee3-4a63-a484-9e4aad10ad8a.jpg?h=732&w=548&f=jpg)",
+    title: "유독",
+    type: "LIVE",
+    views: 11000,
+  },
+  {
+    id: "203",
+    image:
+      "url(https://dhdfh3vybe18.cloudfront.net/broadcast/lg-uplus/lklg-uplus-3ec5fd0a4e14430fa8fb096890781237/thum/a70d10e7-bee3-4a63-a484-9e4aad10ad8a.jpg?h=732&w=548&f=jpg)",
+    title: "유독",
+    type: "LIVE",
+    views: 11000,
+  },
+  {
+    id: "204",
     image:
       "url(https://dhdfh3vybe18.cloudfront.net/broadcast/lg-uplus/lklg-uplus-3ec5fd0a4e14430fa8fb096890781237/thum/a70d10e7-bee3-4a63-a484-9e4aad10ad8a.jpg?h=732&w=548&f=jpg)",
     title: "유독",

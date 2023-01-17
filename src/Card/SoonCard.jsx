@@ -8,6 +8,7 @@ let Frame = styled.div`
   display: inline-block;
   position: relative;
   overflow: visible;
+  scroll-margin: 389px;
 `;
 
 let Card = styled.div`
@@ -19,41 +20,30 @@ let Card = styled.div`
   position: absolute;
   box-shadow: inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
   overflow: hidden;
+  transition: ease-in-out 0.15s;
 
-  height: ${(props) => (props.foucused ? "180px" : "138px")};
-  width: ${(props) => (props.foucused ? "240px" : "184px")};
-  opacity: ${(props) => (props.focused ? "1" : "1")};
-  margin: ${(props) => (props.focused ? "0" : "21px 20px 0 0")};
-  /* transform: ${(props) => (props.focused ? "translateX(-28px)" : "none")};
-  box-shadow: ${(props) =>
-    props.focused
-      ? "0px 10px 40px 20px rgba(9, 13, 25, 0.4), inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2)"
-      : "inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2)"};
-  z-index: ${(props) => (props.focused ? "0" : "1")};
-  transition: ${(props) => (props.focused ? "ease-in-out 0.15s" : "0")}; */
+  height: 138px;
+  width: 184px;
+  margin: 21px 20px 0 0;
 
-  &:hover {
-    margin: 0;
-    transform: translateX(-28px);
-    box-shadow: 0px 10px 40px 20px rgba(9, 13, 25, 0.4),
-      inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
-    width: 240px;
-    height: 180px;
-    transition: ease-in-out 0.15s;
-    opacity: 100%;
-    z-index: 1;
-  }
+  ${({ focused }) =>
+    focused &&
+    css`
+      height: 180px;
+      width: 240px;
+      margin: 0;
+      opacity: 1;
+      transform: translateX(-28px);
+      box-shadow: 0px 10px 40px 20px rgba(9, 13, 25, 0.4),
+        inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
+      z-index: 1;
+    `}
 `;
 
-function SoonCard({ image, onClick, color, focused = false }) {
+function SoonCard({ id, image, onClick, color, focused = false }) {
   return (
-    <Frame>
-      <Card
-        image={image}
-        onClick={onClick}
-        color={color}
-        focused={focused}
-      ></Card>
+    <Frame id={id}>
+      <Card image={image} onClick={onClick} focused={focused}></Card>
     </Frame>
   );
 }

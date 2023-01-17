@@ -15,14 +15,14 @@ const Navigation = styled.nav`
 
 let Logo = styled.img`
   height: 88px;
-  margin: 30px 20px;
+  margin: 30px 10px;
   margin-right: auto;
 `;
 
 function Nav({ children }) {
   return (
     <Navigation>
-      <Logo src="url('/images/logo.png')"></Logo>
+      <Logo src="https://github.com/hyojoongit/upluslive/blob/main/public/images/logo.png?raw=true"></Logo>
       {children}
     </Navigation>
   );
