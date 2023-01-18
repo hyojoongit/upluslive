@@ -3,18 +3,29 @@ import Nav from "./Nav";
 import Home from "./Pages/Home";
 import Live from "./Pages/Live";
 import Player from "./Pages/Player";
-import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import programData from "./programData.js";
 import soonData from "./soonData.js";
 
 function App() {
   let [programs] = useState(programData);
   let [soons] = useState(soonData);
+  const location = useLocation();
+  const [showSideNav, setShowSideNav] = useState(true);
+  useEffect(() => {
+    if (location.pathname.startsWith("/player")) {
+      console.log(location.pathname, "no side nav");
+      setShowSideNav(false);
+    } else {
+      console.log(location.pathname, "shows side nav");
+      setShowSideNav(true);
+    }
+  }, [location.pathname]);
 
   return (
     <div className="App">
-      <SideNav />
+      {showSideNav && <SideNav />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/live" element={<Live />} />

@@ -10,6 +10,7 @@ let HorizontalList = styled.ul`
   margin: 0;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  scroll-margin: 181px;
   &::-webkit-scrollbar {
     display: none;
   }

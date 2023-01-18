@@ -8,7 +8,8 @@ let Frame = styled.div`
   display: inline-block;
   position: relative;
   overflow: visible;
-  scroll-margin: 389px;
+  scroll-margin-left: 389px;
+  scroll-margin-top: 181px;
 `;
 
 let Video = styled.video`
@@ -141,7 +142,7 @@ function ProgramCard({
   return (
     <Frame id={id}>
       <Card onClick={onClick} image={image} focused={focused}>
-        <Video autoplay loop>
+        <Video autoplay="autoplay" muted="muted" loop="loop">
           <source src={video} type="video/mp4"></source>
         </Video>
         <TopStampArea>

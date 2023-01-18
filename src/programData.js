@@ -2,7 +2,7 @@ let data = [
   {
     id: "000",
     video:
-      "https://dl27gtzv7mq2q.cloudfront.net/streams/20230110/lklg-uplus-04f6c35927b940deb3a1b9de52885fcf/1ac998c74ac54d41a2026de259c0879a_preview_VOD.mp4",
+      "https://a01-g-naver-vod.pstatic.net/selective/c/read/v2/VOD_ALPHA/selective_2023_01_16_17/1ed61ecc-954e-11ed-91f4-48df37e302f2.mp4?__gda__=1674036395_57752d0735b4bfa3de64ea6d4f8b0635",
     image:
       "url(https://dhdfh3vybe18.cloudfront.net/broadcast/lg-uplus/lklg-uplus-3b45f4ecbe564d7c9fb51b81f64c0ecc/thum/56d62027-b02c-4854-8fd2-dbe43a6adea6.png?h=732&w=548&f=jpg)",
     title: "U+키즈폰 with 리틀카카오프렌즈",
@@ -122,7 +122,7 @@ let data = [
     views: 11000,
   },
   {
-    id: "204",
+    id: "20",
     image:
       "url(https://dhdfh3vybe18.cloudfront.net/broadcast/lg-uplus/lklg-uplus-3ec5fd0a4e14430fa8fb096890781237/thum/a70d10e7-bee3-4a63-a484-9e4aad10ad8a.jpg?h=732&w=548&f=jpg)",
     title: "유독",

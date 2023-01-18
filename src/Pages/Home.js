@@ -1,5 +1,6 @@
 import programData from "../programData.js";
 import soonData from "../soonData.js";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProgramCard from "../Card/ProgramCard";
 import SoonArea from "../Area/SoonArea";
@@ -7,14 +8,43 @@ import SoonCard from "../Card/SoonCard";
 import HorizontalList from "../List/List";
 import SectionTitle from "../List/Title";
 
+//***키보드 입력으로 스크롤 비활성화***//
+var keys = {};
+window.addEventListener(
+  "keydown",
+  function (e) {
+    keys[e.code] = true;
+    switch (e.code) {
+      case "ArrowUp":
+      case "ArrowDown":
+      case "ArrowLeft":
+      case "ArrowRight":
+      case "Space":
+        e.preventDefault();
+        break;
+      default:
+        break;
+    }
+  },
+  false
+);
+window.addEventListener(
+  "keyup",
+  function (e) {
+    keys[e.code] = false;
+  },
+  false
+);
+
+//***focused가 soon에 속할때, focused된 카드의 배열 내 순서 반환***//
 function searchCards(focused) {
-  //focused가 soon에 속할때, focused된 카드의 배열 내 순서 반환
   let parsed = parseInt(focused);
   if (parsed / 100 >= 1 && parsed / 100 < 2) {
     return parsed % 100;
   } else return 0;
 }
 
+//***인자를 id 형태(세 자리 문자열)로 변환***//
 function parseToId(num) {
   if (num >= 0 && num <= 9) {
     return "00" + num;
@@ -28,31 +58,26 @@ function parseToId(num) {
   }
 }
 
+//***focused 가 본인인지 확인하는 함수. boolean 반환.***//
 function isFocused(line, focused, i) {
-  // ++ focused 가 본인인지 확인하는 함수 필요. boolean 반환.
-  //    <ProgramCard ... focused=함수명()>으로 사용
   let parsed = "";
   if (line == "000") {
-    //parsed 에 i -> "00i" 형태로 변환.
     parsed = parseToId(i);
   } else if (line == "100") {
     parsed = parseToId(100 + i);
   } else if (line == "200") {
     parsed = parseToId(200 + i);
   }
-
-  // if (parsed == focused) {
-  //   console.log(parsed + "is focused");
-  // }
-  //focused, parsed 비교. 같으면 true 반환
   return parsed == focused ? true : false;
 }
 
 function Home() {
+  let navigate = useNavigate();
   let [programs] = useState(programData);
   let [soons] = useState(soonData);
   let [focused, setFocused] = useState("000");
 
+  //***방향키 입력에 따른 focused state 변경***//
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.keyCode === 38 && focused >= 100) {
@@ -67,6 +92,10 @@ function Home() {
         setFocused(parseToId(parseInt(focused) - 1));
       } else if (e.keyCode === 39) {
         setFocused(parseToId(parseInt(focused) + 1));
+      } else if (e.keyCode === 13) {
+        navigate("/player/" + focused);
+      } else if (e.keyCode === 8) {
+        navigate(-1);
       }
       console.log(">>>activate");
     }
@@ -76,16 +105,10 @@ function Home() {
     };
   }, [focused]);
 
+  //***focused state가 변하면 해당 element를 좌측 상단으로***//
   useEffect(() => {
     const element = document.getElementById(focused);
-    // const { top, left } = element.getBoundingClientRect();
-    // window.scrollTo({
-    //   top: top + window.scrollY - 181,
-    //   left: left + window.scrollX - 389,
-    //   behavior: "smooth",
-    // });
-    // if (element) {
-    if (focused) {
+    if (element) {
       console.log("scrollIntoView");
       console.log("element:", element.getClientRects());
       element.scrollIntoView({

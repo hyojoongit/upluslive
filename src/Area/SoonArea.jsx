@@ -70,6 +70,7 @@ let Button = styled.button`
 `;
 
 function SoonArea({
+  id,
   children,
   image,
   time,
