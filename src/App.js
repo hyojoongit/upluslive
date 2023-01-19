@@ -13,6 +13,8 @@ function App() {
   let [soons] = useState(soonData);
   const location = useLocation();
   const [showSideNav, setShowSideNav] = useState(true);
+
+  //player에서는 sideNav 안보이게
   useEffect(() => {
     if (location.pathname.startsWith("/player")) {
       console.log(location.pathname, "no side nav");

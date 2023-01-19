@@ -4,7 +4,7 @@ let Area = styled.div`
   padding: 75px 0px;
   display: flex;
   background-color: rgba(9, 13, 25, 0.6);
-  background: linear-gradient(rgb(9, 13, 25, 0.4), rgb(9, 13, 25, 0.6) 50%);
+  background: linear-gradient(rgb(9, 13, 25, 0.6), rgb(9, 13, 25, 0.6) 50%);
   backdrop-filter: blur(100px);
   flex-direction: row;
   justify-content: start;
@@ -38,13 +38,28 @@ let InnerArea = styled.div`
   height: 930px;
 `;
 
-function CardArea({ children, image }) {
+function CardArea({ children, image, video }) {
   return (
     <>
       <Area>
         <InnerArea>{children}</InnerArea>
       </Area>
-      <BackgroundImg image={image}></BackgroundImg>
+      <video
+        src={video}
+        controls={false}
+        autoPlay={true}
+        loop={true}
+        style={{
+          zIndex: "-1",
+          top: "0",
+          left: "0",
+          position: "absolute",
+          height: "1080px",
+          width: "100%",
+          objectFit: "fill",
+        }}
+      />
+      {/* <BackgroundImg image={image}></BackgroundImg> */}
     </>
   );
 }

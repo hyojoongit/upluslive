@@ -131,7 +131,7 @@ function Home() {
                 console.log("focused on : " + focused);
               }}
               id={programs[i].id}
-              image={programs[i].image}
+              image={"url(" + programs[i].image + ")"}
               title={programs[i].title}
               type={programs[i].type}
               views={programs[i].views}
