@@ -1,14 +1,42 @@
 import { useHistory, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { isFocused, parseToId, searchCards } from "../Functions/focusFunctions";
 
 import programData from "../programData.js";
 
-import ProgramCard from "../Card/ProgramCard";
+import PlayerCard from "../Card/PlayerCard";
 import ViewCard from "../Player/ViewCard";
 import CardArea from "../Player/CardArea";
 import HorizontalList from "../List/List";
-import SectionTitle from "../List/Title";
+import PlayerList from "../List/PlayerList";
+
+const Related = styled.div`
+  transition: 0.2s;
+  position: absolute;
+  font-size: 40px;
+  font-weight: 900;
+  color: white;
+  text-align: left;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  width: 200px;
+  top: 80px;
+  margin-left: 40px;
+  opacity: ${(props) => {
+    if (props.current >= 4) return "1";
+    else if (props.current === 3) return "0.5";
+  }};
+  left: ${(props) => {
+    if (props.current >= 4) return "840px";
+    else if (props.current === 3) return "1553px";
+    else return "1920px";
+  }};
+  display: ${(props) => {
+    if (props.current <= 2) return "block";
+    else return "block";
+  }};
+`;
 
 const Card = styled.div`
   display: flex;
@@ -71,21 +99,29 @@ const Card3 = styled(Card)`
 
 //card 4 : focused -> 2,3 / not focused -> 3(focused: 3), out(focused: 1,2)
 const OuterWrapper = styled(Card)`
+  transition: 0.2s;
+  overflow: visible;
+  box-shadow: none;
+  background-color: rgba(9, 13, 25, 0);
   border-radius: 20px 0 0 20px;
-  z-index: 1;
-  height: 780px;
+  z-index: 0;
+  height: 480px;
   width: ${(props) => {
-    if (props.current >= 4) return "1080px";
-    else return "367px";
+    if (props.current >= 4) return "auto";
+    else if (props.current === 3) return "367px";
   }};
   opacity: ${(props) => {
     if (props.current >= 4) return "1";
-    else return "0.5";
+    else if (props.current === 3) return "0.5";
   }};
   left: ${(props) => {
-    if (props.current >= 4) return "840px";
+    if (props.current >= 4) return 840 - 270 * (props.current - 4) + "px";
     else if (props.current === 3) return "1553px";
-    else return "3000px";
+    else return "1920px";
+  }};
+  display: ${(props) => {
+    if (props.current <= 2) return "block";
+    else return "block";
   }};
 `;
 
@@ -215,8 +251,22 @@ function Player(props) {
     };
   }, [focusedCard]);
 
+  //focus된 관련방송 앞으로 스크롤 보내기
+  // useEffect(() => {
+  //   const element = document.getElementById(parseToId(focusedCard - 3));
+  //   if (element) {
+  //     console.log("scrollIntoView");
+  //     console.log("element:", element.getClientRects());
+  //     element.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "start",
+  //       inline: "start",
+  //     });
+  //   } else console.log("element to scroll not found");
+  // }, [focusedCard]);
+
   return (
-    <div>
+    <div style={{ margin: "0", height: "100%", overflow: "hidden" }}>
       <CardArea image={match.image} video={match.video}>
         <Card1 focused={focusedCard === 1} current={focusedCard}>
           <InfoTag>LIVE</InfoTag>
@@ -278,24 +328,26 @@ function Player(props) {
         <Card3 focused={focusedCard === 3} current={focusedCard}>
           LIVE REACTIONS
         </Card3>
-        <OuterWrapper
-          focused={focusedCard === 3}
-          current={focusedCard}
-        ></OuterWrapper>
-        {/* <SectionTitle>LIVE</SectionTitle>
-        <HorizontalList>
-          {programs.map(function (a, i) {
-            return (
-              <ProgramCard
-                id={programs[i].id}
-                image={programs[i].image}
-                title={programs[i].title}
-                type={programs[i].type}
-                views={programs[i].views}
-              ></ProgramCard>
-            );
-          })}
-        </HorizontalList> */}
+        <Related focused={focusedCard === 4} current={focusedCard}>
+          관련방송
+        </Related>
+        <OuterWrapper focused={focusedCard === 4} current={focusedCard}>
+          <PlayerList>
+            {programs.map(function (a, i) {
+              return (
+                <PlayerCard
+                  id={programs[i].id}
+                  image={"url(" + programs[i].image + ")"}
+                  title={programs[i].title}
+                  type={programs[i].type}
+                  views={programs[i].views}
+                  focused={isFocused("000", parseToId(focusedCard - 4), i)}
+                  opacity={1 - (focusedCard - 4 - i) * 0.6}
+                ></PlayerCard>
+              );
+            })}
+          </PlayerList>
+        </OuterWrapper>
       </CardArea>
     </div>
   );

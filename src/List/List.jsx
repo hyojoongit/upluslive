@@ -3,9 +3,9 @@ import styled from "styled-components";
 let HorizontalList = styled.ul`
   list-style: none;
   white-space: nowrap;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: visible;
-  padding-left: 389px;
+  padding-left: ${(props) => props.left};
   text-align: left;
   margin: 0;
   -ms-overflow-style: none;
@@ -16,8 +16,8 @@ let HorizontalList = styled.ul`
   }
 `;
 
-function List({ children }) {
-  return <HorizontalList>{children}</HorizontalList>;
+function List({ children, left }) {
+  return <HorizontalList left={left}>{children}</HorizontalList>;
 }
 
 export default List;

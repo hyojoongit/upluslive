@@ -2,9 +2,10 @@ import styled, { css } from "styled-components";
 
 let Area = styled.div`
   position: relative;
-  height: 669px;
+  height: 790px;
 `;
 let Background = styled.div`
+  margin-top: 157px;
   position: absolute;
   background: linear-gradient(rgb(9, 13, 25, 0.4), rgb(9, 13, 25, 1) 85%);
   top: 89.5px;
@@ -14,6 +15,7 @@ let Background = styled.div`
   backdrop-filter: blur(100px);
 `;
 let BackgroundImg = styled.div`
+  margin-top: 157px;
   position: absolute;
   background-image: ${(props) => props.image};
   background-repeat: no-repeat;

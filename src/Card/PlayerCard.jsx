@@ -2,16 +2,18 @@ import styled, { css } from "styled-components";
 import { Play, Flash } from "iconsax-react";
 
 let Frame = styled.div`
-  width: 320px;
-  height: 612px;
-  padding-top: 157px;
+  opacity: ${(props) => props.opacity};
+  width: 250px;
+  height: 457px;
   border-radius: 16px;
   margin: 0 20px 0 0;
   display: inline-block;
   position: relative;
   overflow: visible;
   scroll-margin-left: 389px;
-  scroll-margin-top: 181px;
+  transition: ease-in-out 0.15s;
+
+  /* scroll-margin-top: 181px; */
 `;
 
 let Video = styled.video`
@@ -26,44 +28,32 @@ let Video = styled.video`
 let Card = styled.div`
   box-sizing: border-box;
   background-image: ${(props) => props.image};
-  background-size: auto 544px;
+  opacity: 80%;
+
+  background-size: auto 406px;
   background-position: center;
-  width: 320px;
-  height: 544px;
-  border-radius: 16px;
-  margin: 0 20px 0 0;
+  width: 250px;
+  height: 334px;
+  border-radius: 12px;
+  margin: 25px 20px 0 0;
   display: inline-block;
   position: absolute;
-  opacity: 80%;
-  margin-top: 34px;
   box-shadow: inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
 
   ${(p) =>
     p.focused &&
     css`
-      /* border: solid rgba(255, 255, 255, 1) 8px; */
-      background-size: auto 612px;
+      opacity: 1;
+
+      background-size: auto 385px;
       margin: 0;
       transform: translateX(-20px);
-      box-shadow: 0px 10px 60px 40px rgba(9, 13, 25, 0.4),
-        inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
-      width: 360px;
-      height: 612px;
+      box-shadow: inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
+      width: 287px;
+      height: 385px;
       transition: ease-in-out 0.15s;
-      opacity: 100%;
       z-index: 1;
-    `}/* &:hover {
-    background-size: auto 612px;
-    margin: 0;
-    transform: translateX(-20px);
-    box-shadow: 0px 10px 60px 40px rgba(9, 13, 25, 0.4),
-      inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
-    width: 360px;
-    height: 612px;
-    transition: ease-in-out 0.15s;
-    opacity: 100%;
-    z-index: 1;
-  } */
+    `}
 `;
 
 let TopStampWrapper = styled.div`
@@ -73,7 +63,8 @@ let TopStampWrapper = styled.div`
   text-align: center;
   margin-block: 0px;
   top: 20px;
-  right: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: 10px;
   height: 40px;
   width: auto;
@@ -109,60 +100,32 @@ let ViewStamp = styled.div`
   font-weight: 700;
   color: "#eee";
 `;
-let BestStamp = styled.div`
-  line-height: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  color: #eee;
-`;
-let ShortsStamp = styled.div`
-  line-height: 100%;
-  display: flex;
-  align-items: center;
-  color: #eee;
-  height: 100%;
-`;
-
-let BottomStampWrapper = styled.div`
-  box-sizing: border-box;
-  position: relative;
-  bottom: 10px;
-  border-radius: 10px;
-  width: auto;
-  height: 40px;
-  padding: 4px 12px 4px 12px;
-  font-size: 20px;
-  font-weight: 900;
-  background-color: ${(props) => {
-    if (props.type === "best") return "#d04141";
-    else if (props.type === "shorts") return "#1754ae";
-    else return "rgba(9, 13, 25, 0.6)";
-  }};
-  display: ${(props) =>
-    props.type == "LIVE" || props.type == "default" ? "none" : "inline-block"};
-`;
 
 let TitleArea = styled.div`
+  transition: 0.2s;
+  padding: 0;
   box-sizing: border-box;
   position: absolute;
-  background: linear-gradient(rgb(0, 0, 0, 0), rgb(0, 0, 0, 0.7) 60%);
-  padding: 20px;
-  bottom: 0px;
+  bottom: 20px;
   width: 100%;
-  height: 30%;
+  height: 64px;
   white-space: pre-wrap;
+  ${(p) =>
+    p.focused &&
+    css`
+      bottom: 0px;
+    `}
 `;
 
 let Title = styled.p`
+  top: 0;
   display: -webkit-box;
   position: absolute;
-  bottom: 20px;
-  width: calc(100% - 40px);
-  font-size: 28px;
+  width: 100%;
+  font-size: 22px;
   font-weight: bold;
-  color: white;
-  text-align: left;
+  color: rgba(141, 142, 148, 1);
+  text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
   -webkit-line-clamp: 2;
@@ -171,13 +134,16 @@ let Title = styled.p`
   ${(p) =>
     p.focused &&
     css`
-      font-size: 36px;
+      color: white;
+
+      font-size: 22px;
       transition: 0.15s;
     `}
 `;
 
-function ProgramCard({
+function PlayerCard({
   id,
+  opacity,
   image,
   video,
   type,
@@ -187,7 +153,7 @@ function ProgramCard({
   focused = false,
 }) {
   return (
-    <Frame id={id}>
+    <Frame id={id} opacity={opacity}>
       <Card onClick={onClick} image={image} focused={focused}>
         <Video autoplay="autoplay" muted="muted" loop="loop">
           <source src={video} type="video/mp4"></source>
@@ -201,20 +167,12 @@ function ProgramCard({
           )}
           {type === "LIVE" && <LiveStamp>{`${views}`}</LiveStamp>}
         </TopStampWrapper>
-        <TitleArea focused={focused}>
-          <BottomStampWrapper type={type}>
-            {type === "best" && <BestStamp>BEST</BestStamp>}
-            {type === "shorts" && (
-              <ShortsStamp>
-                <Flash variant="Bold"></Flash>쇼츠
-              </ShortsStamp>
-            )}
-          </BottomStampWrapper>
-          <Title focused={focused}>{title}</Title>
-        </TitleArea>
       </Card>
+      <TitleArea focused={focused}>
+        <Title focused={focused}>{title}</Title>
+      </TitleArea>
     </Frame>
   );
 }
 
-export default ProgramCard;
+export default PlayerCard;

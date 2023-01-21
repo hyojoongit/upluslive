@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
 let Frame = styled.div`
+  padding-top: 157px;
+
   width: 184px;
   height: 180px;
   border-radius: 16px;
