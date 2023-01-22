@@ -2,6 +2,7 @@ import { useHistory, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { isFocused, parseToId, searchCards } from "../Functions/focusFunctions";
+import { EmojiHappy } from "iconsax-react";
 
 import programData from "../programData.js";
 
@@ -10,6 +11,7 @@ import ViewCard from "../Player/ViewCard";
 import CardArea from "../Player/CardArea";
 import HorizontalList from "../List/List";
 import PlayerList from "../List/PlayerList";
+import ReactModal from "../Pages/ReactionModal";
 
 const Related = styled.div`
   transition: 0.2s;
@@ -86,6 +88,8 @@ const Card2 = styled(Card)`
 
 //card 3 : focused -> 2 / not focused -> 1(focused: 4), 3(focused: 1)
 const Card3 = styled(Card)`
+  display: flex;
+  flex-direction: column;
   z-index: 1;
   height: ${(props) => {
     if (props.current >= 4) return "780px";
@@ -192,6 +196,111 @@ const Description = styled.p`
   color: #aeaeb2;
 `;
 
+const Participants = styled.div`
+  margin: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 12px;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #eee;
+  height: 37px;
+  &::before {
+    height: 12px;
+    width: 12px;
+    background-color: #fa5454;
+    border-radius: 6px;
+    content: " ";
+  }
+`;
+
+const Announcement = styled.div`
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 20px 20px 20px;
+  padding: 20px;
+  gap: 10px;
+  height: auto;
+  background: rgba(9, 13, 25, 0.6);
+  border-radius: 20px;
+
+  padding: 20px;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 36px;
+  color: #eeeeee;
+  text-align: left;
+`;
+
+const ReactionThread = styled.div`
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 40px 40px 40px;
+  gap: 32px;
+  height: auto;
+`;
+const Reaction = styled.div`
+  text-align: left;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+  color: #d1d1d7;
+  &::before {
+    color: #8d8e94;
+    content: "${(props) => props.user}";
+    margin-right: 12px;
+  }
+`;
+
+const ButtonArea = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 254px;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 13, 25, 0.0001) 0%,
+    rgba(9, 13, 25, 0.9) 41.15%
+  );
+`;
+
+const ReactButton = styled.div`
+  position: absolute;
+  bottom: 0;
+  margin: 40px;
+  width: calc(100% - 80px);
+  border-radius: 8px;
+  height: 88px;
+  background-color: #3e4154;
+  transition: 0.2s;
+  font-size: 30px;
+  font-weight: 700;
+  color: #aeaeb2;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: bottom;
+  gap: 8px;
+
+  ${(p) =>
+    p.focused &&
+    css`
+      height: 100px;
+      background-color: #eee;
+      margin-bottom: 34px;
+      color: #090d19;
+    `}
+`;
+
 //***키보드 입력으로 스크롤 비활성화***//
 var keys = {};
 window.addEventListener(
@@ -229,7 +338,7 @@ function Player(props) {
   });
 
   const [focusedCard, setFocusedCard] = useState(1);
-  let focused;
+  const [showModal, setShowModal] = useState(false);
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 39) {
@@ -238,35 +347,28 @@ function Player(props) {
       setFocusedCard(focusedCard - 1);
     } else if (e.keyCode === 8) {
       navigate(-1);
-    } else if (e.keyCode === 13 && focused) {
-      navigate("/player/" + focused);
+    } else if (e.keyCode === 13 && focusedCard >= 4) {
+      navigate("/player/" + parseToId(focusedCard - 4));
+    } else if (e.keyCode === 13 && focusedCard === 3) {
+      setShowModal(true);
     }
   };
 
   useEffect(() => {
     console.log(focusedCard);
-    document.addEventListener("keydown", handleKeyDown);
+
+    if (showModal) {
+      document.removeEventListener("keydown", handleKeyDown);
+    } else {
+      document.addEventListener("keydown", handleKeyDown);
+    }
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [focusedCard]);
-
-  //focus된 관련방송 앞으로 스크롤 보내기
-  // useEffect(() => {
-  //   const element = document.getElementById(parseToId(focusedCard - 3));
-  //   if (element) {
-  //     console.log("scrollIntoView");
-  //     console.log("element:", element.getClientRects());
-  //     element.scrollIntoView({
-  //       behavior: "smooth",
-  //       block: "start",
-  //       inline: "start",
-  //     });
-  //   } else console.log("element to scroll not found");
-  // }, [focusedCard]);
+  }, [focusedCard, showModal]);
 
   return (
-    <div style={{ margin: "0", height: "100%", overflow: "hidden" }}>
+    <div style={{ margin: "0", height: "1080px", overflow: "hidden" }}>
       <CardArea image={match.image} video={match.video}>
         <Card1 focused={focusedCard === 1} current={focusedCard}>
           <InfoTag>LIVE</InfoTag>
@@ -281,6 +383,7 @@ function Player(props) {
             }}
           />
         </Card1>
+
         <Card2 focused={focusedCard === 2} current={focusedCard}>
           {/* PROGRAM INFO <br></br>
           {match.title} */}
@@ -320,14 +423,51 @@ function Player(props) {
               <br />
               <br />
             </Description>
-            {/* 
-
-            <Description></Description> */}
           </TextWrapper>
         </Card2>
+
         <Card3 focused={focusedCard === 3} current={focusedCard}>
-          LIVE REACTIONS
+          <Participants>{match.views}시청중</Participants>
+          <Announcement>
+            ★품절 임박★ Apple Watch 8 특집! 리뷰 작성 전원 신세계 3만원 상품권 +
+            실시간 상담 개통 시 신세계 1만원 추가!
+          </Announcement>
+          <ReactionThread>
+            <Reaction user="말년병장">
+              핸드폰 자주 바꾸는 사람들한테는 무약정 다이렉트가 딱인것 같습니다.
+              충성충성
+            </Reaction>
+
+            <Reaction user="Song100">영상 봐야지</Reaction>
+            <Reaction user="랄라">
+              50%인데, 포인트도 주다니....2090원에 샀네요 ㅋㅋㅋㅋㅋ
+            </Reaction>
+            <Reaction user="새벽 달리기">
+              그레이로 봤는데 컬러 너무 고급지다
+            </Reaction>
+            <Reaction user="쏘쏘앨리">
+              이번엔 신랑꺼 사고 다음번에 기회봐서 제것두 구입할게유
+            </Reaction>
+            <Reaction user="랄라">
+              50%인데, 포인트도 주다니....2090원에 샀네요 ㅋㅋㅋㅋㅋ
+            </Reaction>
+            <Reaction user="에너자이저">진짜 고급스럽네</Reaction>
+            <Reaction user="새벽 달리기">
+              그레이로 봤는데 컬러 너무 고급지다
+            </Reaction>
+          </ReactionThread>
+          <ButtonArea>
+            <ReactButton focused={focusedCard === 3}>
+              <EmojiHappy
+                size="32"
+                variant="Bold"
+                style={{ paddingTop: "4px" }}
+              />
+              반응 남기기
+            </ReactButton>
+          </ButtonArea>
         </Card3>
+
         <Related focused={focusedCard === 4} current={focusedCard}>
           관련방송
         </Related>
@@ -343,12 +483,14 @@ function Player(props) {
                   views={programs[i].views}
                   focused={isFocused("000", parseToId(focusedCard - 4), i)}
                   opacity={1 - (focusedCard - 4 - i) * 0.6}
+                  matched={match.id === parseToId(i)}
                 ></PlayerCard>
               );
             })}
           </PlayerList>
         </OuterWrapper>
       </CardArea>
+      <ReactModal visible={showModal} setShowModal={setShowModal}></ReactModal>
     </div>
   );
 }

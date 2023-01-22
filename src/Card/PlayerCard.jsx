@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Play, Flash } from "iconsax-react";
+import { Play, Flash, Watch } from "iconsax-react";
 
 let Frame = styled.div`
   opacity: ${(props) => props.opacity};
@@ -25,9 +25,26 @@ let Video = styled.video`
   display: none;
 `;
 
+let WatchingStamp = styled.p`
+  position: absolute;
+  display: none;
+  font-size: 22px;
+  color: #eee;
+  bottom: 20px;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  font-weight: 700;
+  ${(p) =>
+    p.matched &&
+    css`
+      display: inline-block;
+    `}
+`;
+
 let Card = styled.div`
   box-sizing: border-box;
-  background-image: ${(props) => props.image};
+  background: ${(props) => props.image};
   opacity: 80%;
 
   background-size: auto 406px;
@@ -44,15 +61,26 @@ let Card = styled.div`
     p.focused &&
     css`
       opacity: 1;
-
       background-size: auto 385px;
       margin: 0;
       transform: translateX(-20px);
-      box-shadow: inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
+      box-shadow: 0px 10px 40px 20px rgba(0, 0, 0, 0.4),
+        inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
       width: 287px;
       height: 385px;
       transition: ease-in-out 0.15s;
       z-index: 1;
+    `}
+  ${(p) =>
+    p.matched &&
+    css`
+      background: linear-gradient(
+          180deg,
+          rgba(9, 13, 25, 0.2) 0%,
+          rgba(9, 13, 25, 0.9) 100%
+        ),
+        ${(props) => props.image};
+      background-size: auto 385px;
     `}
 `;
 
@@ -110,6 +138,7 @@ let TitleArea = styled.div`
   width: 100%;
   height: 64px;
   white-space: pre-wrap;
+  z-index: 3;
   ${(p) =>
     p.focused &&
     css`
@@ -151,13 +180,15 @@ function PlayerCard({
   title,
   onClick,
   focused = false,
+  matched,
 }) {
   return (
     <Frame id={id} opacity={opacity}>
-      <Card onClick={onClick} image={image} focused={focused}>
+      <Card onClick={onClick} image={image} focused={focused} matched={matched}>
         <Video autoplay="autoplay" muted="muted" loop="loop">
           <source src={video} type="video/mp4"></source>
         </Video>
+        <WatchingStamp matched={matched}>지금 시청중</WatchingStamp>
         <TopStampWrapper type={type}>
           {(type === "best" || type === "shorts" || type === "default") && (
             <ViewStamp>

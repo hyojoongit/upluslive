@@ -112,6 +112,7 @@ function Home() {
               type={programs[i].type}
               views={programs[i].views}
               focused={isFocused("000", focused, i)}
+              video={programs[i].video}
             ></ProgramCard>
           );
         })}

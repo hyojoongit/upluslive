@@ -14,16 +14,8 @@ let Frame = styled.div`
   scroll-margin-top: 181px;
 `;
 
-let Video = styled.video`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 360px;
-  height: 612px;
-  display: none;
-`;
-
 let Card = styled.div`
+  overflow: hidden;
   box-sizing: border-box;
   background-image: ${(props) => props.image};
   background-size: auto 544px;
@@ -52,18 +44,14 @@ let Card = styled.div`
       transition: ease-in-out 0.15s;
       opacity: 100%;
       z-index: 1;
-    `}/* &:hover {
-    background-size: auto 612px;
-    margin: 0;
-    transform: translateX(-20px);
-    box-shadow: 0px 10px 60px 40px rgba(9, 13, 25, 0.4),
-      inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
-    width: 360px;
-    height: 612px;
-    transition: ease-in-out 0.15s;
-    opacity: 100%;
-    z-index: 1;
-  } */
+    `}
+`;
+
+let Video = styled.video`
+  display: ${(props) => {
+    if (props.focused) return "block";
+    else return "none";
+  }};
 `;
 
 let TopStampWrapper = styled.div`
@@ -117,7 +105,6 @@ let BestStamp = styled.div`
   color: #eee;
 `;
 let ShortsStamp = styled.div`
-  line-height: 100%;
   display: flex;
   align-items: center;
   color: #eee;
@@ -189,9 +176,6 @@ function ProgramCard({
   return (
     <Frame id={id}>
       <Card onClick={onClick} image={image} focused={focused}>
-        <Video autoplay="autoplay" muted="muted" loop="loop">
-          <source src={video} type="video/mp4"></source>
-        </Video>
         <TopStampWrapper type={type}>
           {(type === "best" || type === "shorts" || type === "default") && (
             <ViewStamp>
@@ -212,6 +196,19 @@ function ProgramCard({
           </BottomStampWrapper>
           <Title focused={focused}>{title}</Title>
         </TitleArea>
+        <Video
+          focused={focused}
+          src={video}
+          controls={false}
+          autoPlay={true}
+          loop={true}
+          style={{
+            width: "100%",
+            height: "90%",
+            objectFit: "cover",
+            visibility: { focused },
+          }}
+        />
       </Card>
     </Frame>
   );
