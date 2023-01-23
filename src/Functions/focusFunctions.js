@@ -32,3 +32,10 @@ export function isFocused(line, focused, i) {
   }
   return parsed == focused ? true : false;
 }
+
+//***현재 focused 된 섹션이 자신과 같은 section인지 확인 */
+export function focusedSection(focused, id) {
+  let focusedSection = parseInt(parseToId(focused) / 100);
+  let mySection = parseInt(id / 100);
+  return focusedSection === mySection;
+}

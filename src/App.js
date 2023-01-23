@@ -1,16 +1,15 @@
 import "./App.css";
 import Nav from "./Nav";
 import Home from "./Pages/Home";
+import HomeB from "./Pages/HomeB";
 import Live from "./Pages/Live";
 import Player from "./Pages/Player";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import programData from "./programData.js";
-import soonData from "./soonData.js";
 
 function App() {
   let [programs] = useState(programData);
-  let [soons] = useState(soonData);
   const location = useLocation();
   const [showSideNav, setShowSideNav] = useState(true);
 
@@ -26,7 +25,10 @@ function App() {
   }, [location.pathname]);
 
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{ margin: "0", height: "1080px", overflow: "hidden" }}
+    >
       {showSideNav && <SideNav />}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -38,7 +40,7 @@ function App() {
           path="/player/:id"
           element={<Player programs={programs}></Player>}
         ></Route>
-
+        <Route path="/b" element={<HomeB />}></Route>
         <Route path="*" element={<div>페이지 없음</div>}></Route>
       </Routes>
     </div>

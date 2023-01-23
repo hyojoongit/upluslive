@@ -6,7 +6,7 @@ const ModalView = styled.div`
   z-index: 5;
   display: flex;
   width: 1920px;
-  height: 728px;
+  height: 768px;
   position: absolute;
   bottom: -728px;
   left: 0;
@@ -28,7 +28,7 @@ const ModalView = styled.div`
 
 const Title = styled.p`
   position: absolute;
-  top: 120px;
+  top: 200px;
 
   font-weight: 700;
   font-size: 40px;
@@ -38,9 +38,9 @@ const Title = styled.p`
 `;
 
 const IconWrapper = styled.div`
-  transition: 0.6s;
+  transition: 0.5s;
   transition-delay: 0.2s;
-  margin-bottom: -200px;
+  margin-bottom: -280px;
   opacity: 0;
   align-items: center;
   display: flex;
@@ -51,7 +51,7 @@ const IconWrapper = styled.div`
     p.visible &&
     css`
       opacity: 1;
-      margin-bottom: 0px;
+      margin-bottom: -80px;
     `}
 `;
 

@@ -2,14 +2,18 @@ import programData from "../programData.js";
 import soonData from "../soonData.js";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ProgramCard from "../Card/ProgramCard";
-import SoonArea from "../Area/SoonArea";
-import SoonCard from "../Card/SoonCard";
+import ProgramCardVertical from "../Card/ProgramCardVertical";
+import SoonAreaVertical from "../Area/SoonAreaVertical";
+import SoonCardVertical from "../Card/SoonCardVertical";
 import HorizontalList from "../List/List";
-import SectionTitle from "../List/Title";
-import { isFocused, parseToId, searchCards } from "../Functions/focusFunctions";
-import styled from "styled-components";
-import { Scroll } from "iconsax-react";
+import VerticalList from "../List/VerticalList";
+import SectionTitleVertical from "../List/TitleVertical";
+import {
+  focusedSection,
+  isFocused,
+  parseToId,
+  searchCards,
+} from "../Functions/focusFunctions";
 
 //***키보드 입력으로 스크롤 비활성화***//
 var keys = {};
@@ -48,18 +52,18 @@ function Home() {
   //***방향키 입력에 따른 focused state 변경***//
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.keyCode === 38 && focused >= 100) {
+      if (e.keyCode === 38 && focused > 0) {
+        setFocused(parseToId(parseInt(focused) - 1));
+      } else if (e.keyCode === 40) {
+        setFocused(parseToId(parseInt(focused) + 1));
+      } else if (e.keyCode === 37 && focused >= 100) {
         setFocused(
           parseToId(parseInt(focused) - 100 - (parseInt(focused) % 100))
         );
-      } else if (e.keyCode === 40) {
+      } else if (e.keyCode === 39) {
         setFocused(
           parseToId(parseInt(focused) + 100 - (parseInt(focused) % 100))
         );
-      } else if (e.keyCode === 37 && focused > 0) {
-        setFocused(parseToId(parseInt(focused) - 1));
-      } else if (e.keyCode === 39) {
-        setFocused(parseToId(parseInt(focused) + 1));
       } else if (e.keyCode === 13) {
         navigate("/player/" + focused);
       } else if (e.keyCode === 8) {
@@ -82,23 +86,37 @@ function Home() {
       console.log("element:", element.getClientRects());
       element.scrollIntoView({
         behavior: "smooth",
-        // block: "start",
+        block: "start",
         inline: "start",
       });
     } else console.log("element to scroll not found");
   }, [focused]);
 
   return (
-    <div>
-      {/* <SectionTitle left="389px">LIVE</SectionTitle> */}
-      <HorizontalList left="389px">
-        <SectionTitle>LIVE</SectionTitle>
+    <div
+      style={{
+        margin: "0",
+        height: "1080px",
+        width: "fit-content",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "nowrap",
+      }}
+    >
+      <VerticalList left="389px">
+        <SectionTitleVertical>LIVE</SectionTitleVertical>
         {programs.map(function (a, i) {
           return (
-            <ProgramCard
+            <ProgramCardVertical
               onClick={() => {
                 setFocused(programs[i].id);
-                console.log("focused on : " + focused);
+                console.log(
+                  "focused on : " +
+                    focused +
+                    "focused section : " +
+                    focusedSection(focused, programs[i].id)
+                );
               }}
               id={programs[i].id}
               image={"url(" + programs[i].image + ")"}
@@ -107,13 +125,38 @@ function Home() {
               views={programs[i].views}
               focused={isFocused("000", focused, i)}
               video={programs[i].video}
-            ></ProgramCard>
+              description={programs[i].description}
+              section={focusedSection(focused, programs[i].id)}
+            ></ProgramCardVertical>
           );
         })}
-      </HorizontalList>
-
-      {/* <SectionTitle left="389px">LIVE 예고</SectionTitle> */}
-      <SoonArea
+      </VerticalList>
+      <VerticalList left="40px">
+        <SectionTitleVertical>LIVE 예고</SectionTitleVertical>
+        {soons.map(function (a, i) {
+          return (
+            <SoonCardVertical
+              onClick={() => {
+                setFocused(soons[i].id);
+                console.log(
+                  "focused on : " +
+                    focused +
+                    "focused section : " +
+                    focusedSection(focused, soons[i].id)
+                );
+              }}
+              id={soons[i].id}
+              color={soons[i].color}
+              image={
+                "url('/images/soonImages/soonThumbnail" + (i + 1) + ".png')"
+              }
+              focused={isFocused("100", focused, i)}
+              section={focusedSection(focused, soons[i].id)}
+            ></SoonCardVertical>
+          );
+        })}
+      </VerticalList>
+      <SoonAreaVertical
         time={soons[searchCards(focused)].time}
         title={soons[searchCards(focused)].title}
         image={
@@ -122,69 +165,35 @@ function Home() {
           ".png')"
         }
         description={soons[0].description}
-      >
-        <HorizontalList left="389px">
-          <SectionTitle>LIVE예고</SectionTitle>
-
-          {soons.map(function (a, i) {
-            return (
-              <SoonCard
-                onClick={() => {
-                  setFocused(soons[i].id);
-                  console.log("focused on : " + focused);
-                }}
-                id={soons[i].id}
-                color={soons[i].color}
-                image={
-                  "url('/images/soonImages/soonThumbnail" + (i + 1) + ".png')"
-                }
-                focused={isFocused("100", focused, i)}
-              ></SoonCard>
-            );
-          })}
-        </HorizontalList>
-      </SoonArea>
-
-      <HorizontalList left="389px">
-        <SectionTitle>아이폰</SectionTitle>
-
+        section={focusedSection(focused, 100)}
+      ></SoonAreaVertical>
+      <VerticalList left="40px">
+        <SectionTitleVertical>LIVE</SectionTitleVertical>
         {programs.map(function (a, i) {
           return (
-            <ProgramCard
+            <ProgramCardVertical
               onClick={() => {
                 setFocused(programs[i].id);
-                console.log("focused on : " + focused);
+                console.log(
+                  "focused on : " +
+                    focused +
+                    "focused section : " +
+                    focusedSection(focused, programs[i].id)
+                );
               }}
               id={programs[i].id}
-              image={programs[i].image}
+              image={"url(" + programs[i].image + ")"}
               title={programs[i].title}
               type={programs[i].type}
               views={programs[i].views}
-              focused={isFocused("300", focused, i)}
-            ></ProgramCard>
+              focused={isFocused("000", focused, i)}
+              video={programs[i].video}
+              description={programs[i].description}
+              section={focusedSection(focused, programs[i].id)}
+            ></ProgramCardVertical>
           );
         })}
-      </HorizontalList>
-
-      <SectionTitle left="389px">갤럭시</SectionTitle>
-      <HorizontalList left="389px">
-        {programs.map(function (a, i) {
-          return (
-            <ProgramCard
-              onClick={() => {
-                setFocused(programs[i].id);
-                console.log("focused on : " + focused);
-              }}
-              id={programs[i].id}
-              image={programs[i].image}
-              title={programs[i].title}
-              type={programs[i].type}
-              views={programs[i].views}
-              focused={isFocused("400", focused, i)}
-            ></ProgramCard>
-          );
-        })}
-      </HorizontalList>
+      </VerticalList>
     </div>
   );
 }

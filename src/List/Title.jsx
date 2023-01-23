@@ -9,6 +9,7 @@ let TitleArea = styled.p`
   margin-top: 60px;
   margin-bottom: 20px;
   padding-left: ${(props) => props.left};
+  z-index: 3;
 `;
 function SectionTitle({ children, left }) {
   return <TitleArea left={left}>{children}</TitleArea>;
