@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 import ProgramCardVertical from "../Card/ProgramCardVertical";
 import SoonAreaVertical from "../Area/SoonAreaVertical";
 import SoonCardVertical from "../Card/SoonCardVertical";
-import HorizontalList from "../List/List";
 import VerticalList from "../List/VerticalList";
 import SectionTitleVertical from "../List/TitleVertical";
 import {

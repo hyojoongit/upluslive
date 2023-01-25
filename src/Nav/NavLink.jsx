@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function isCurrent(to) {
   if (
+    //
     to === "/" &&
     window.location.pathname !== "/" &&
     window.location.pathname.startsWith(to)
@@ -28,12 +29,7 @@ const Link = styled.a`
       color: #eee;
       transition: ease-in-out 0.2s;
       background-color: rgb(238, 238, 238, 0.08);
-    `}/* &:hover {
-    background-color: rgb(238, 238, 238, .08);
-    color: #fffffe;
-    transform: translateY(-2px);
-    transition: .2s;
-  } */
+    `}
 `;
 
 function NavLink({ children, to, active = false }) {

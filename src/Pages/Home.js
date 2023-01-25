@@ -13,7 +13,6 @@ import HorizontalList from "../List/List";
 import SectionTitle from "../List/Title";
 import { isFocused, parseToId, searchCards } from "../Functions/focusFunctions";
 import styled from "styled-components";
-import { Scroll } from "iconsax-react";
 
 //***키보드 입력으로 스크롤 비활성화***//
 var keys = {};

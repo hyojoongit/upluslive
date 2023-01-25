@@ -12,6 +12,9 @@ let Frame = styled.div`
   overflow: visible;
   scroll-margin-left: 389px;
   scroll-margin-top: 181px;
+  :last-child {
+    margin-right: 1400px;
+  }
 `;
 
 let Card = styled.div`
