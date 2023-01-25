@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 let Frame = styled.div`
   :nth-child(2) {
-    margin-top: 181px;
+    margin-top: 48px;
   }
   transform: translateX(-24px);
   width: 340px;
@@ -13,6 +13,7 @@ let Frame = styled.div`
   position: relative;
   overflow: visible;
   scroll-margin-top: 181px;
+  scroll-margin-left: 389px;
 
   ${(p) =>
     p.focused &&

@@ -27,7 +27,12 @@ function App() {
   return (
     <div
       className="App"
-      style={{ margin: "0", height: "1080px", overflow: "hidden" }}
+      style={{
+        margin: "0",
+        height: "1080px",
+        width: "1920px",
+        overflow: "visible",
+      }}
     >
       {showSideNav && <SideNav />}
       <Routes>

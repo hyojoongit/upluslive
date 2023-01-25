@@ -3,7 +3,7 @@ import { Play, Flash } from "iconsax-react";
 
 let Frame = styled.div`
   :nth-child(2) {
-    margin-top: 181px;
+    margin-top: 44px;
   }
   transition: ease-in-out 0.15s;
   width: 740px;
@@ -14,7 +14,8 @@ let Frame = styled.div`
   flex-direction: row;
   position: relative;
   overflow: visible;
-  scroll-margin-top: 181px;
+  scroll-margin-top: 537px;
+  scroll-margin-left: 389px;
   ${(p) =>
     p.focused &&
     css`
@@ -42,6 +43,7 @@ let Card = styled.div`
   border-radius: 16px;
   display: inline-block;
   opacity: 60%;
+
   box-shadow: inset 0px 0px 20px 0px rgba(238, 238, 238, 0.2);
 
   ${(p) =>

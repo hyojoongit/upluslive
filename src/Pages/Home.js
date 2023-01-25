@@ -1,4 +1,8 @@
 import programData from "../programData.js";
+import iphoneData from "../data/iphoneData.js";
+import galaxyData from "../data/galaxyData.js";
+import internetData from "../data/internetData.js";
+
 import soonData from "../soonData.js";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -39,10 +43,28 @@ window.addEventListener(
   false
 );
 
+let SideGradient = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  height: 1080px;
+  width: 120px;
+  background: linear-gradient(
+    270deg,
+    rgba(9, 13, 25, 0) 0%,
+    rgba(9, 13, 25, 0.8) 100%
+  );
+`;
+
 function Home() {
   let navigate = useNavigate();
   let [programs] = useState(programData);
   let [soons] = useState(soonData);
+  let [iphones] = useState(iphoneData);
+  let [galaxies] = useState(galaxyData);
+  let [internets] = useState(internetData);
+
   let [focused, setFocused] = useState("000");
 
   //***방향키 입력에 따른 focused state 변경***//
@@ -56,7 +78,7 @@ function Home() {
         setFocused(
           parseToId(parseInt(focused) + 100 - (parseInt(focused) % 100))
         );
-      } else if (e.keyCode === 37 && focused > 0) {
+      } else if (e.keyCode === 37 && parseInt(focused) % 100 > 0) {
         setFocused(parseToId(parseInt(focused) - 1));
       } else if (e.keyCode === 39) {
         setFocused(parseToId(parseInt(focused) + 1));
@@ -90,7 +112,7 @@ function Home() {
 
   return (
     <div>
-      {/* <SectionTitle left="389px">LIVE</SectionTitle> */}
+      <SideGradient></SideGradient>
       <HorizontalList left="389px">
         <SectionTitle>LIVE</SectionTitle>
         {programs.map(function (a, i) {
@@ -121,7 +143,7 @@ function Home() {
           (searchCards(focused) + 1) +
           ".png')"
         }
-        description={soons[0].description}
+        description={soons[searchCards(focused)].description}
       >
         <HorizontalList left="389px">
           <SectionTitle>LIVE예고</SectionTitle>
@@ -147,40 +169,62 @@ function Home() {
 
       <HorizontalList left="389px">
         <SectionTitle>아이폰</SectionTitle>
-
-        {programs.map(function (a, i) {
+        {iphones.map(function (a, i) {
           return (
             <ProgramCard
               onClick={() => {
-                setFocused(programs[i].id);
+                setFocused(iphones[i].id);
                 console.log("focused on : " + focused);
               }}
-              id={programs[i].id}
-              image={programs[i].image}
-              title={programs[i].title}
-              type={programs[i].type}
-              views={programs[i].views}
-              focused={isFocused("300", focused, i)}
+              id={iphones[i].id}
+              image={"url(" + iphones[i].image + ")"}
+              title={iphones[i].title}
+              type={iphones[i].type}
+              views={iphones[i].views}
+              focused={isFocused("200", focused, i)}
+              video={iphones[i].video}
             ></ProgramCard>
           );
         })}
       </HorizontalList>
 
-      <SectionTitle left="389px">갤럭시</SectionTitle>
       <HorizontalList left="389px">
-        {programs.map(function (a, i) {
+        <SectionTitle>갤럭시</SectionTitle>
+        {galaxies.map(function (a, i) {
           return (
             <ProgramCard
               onClick={() => {
-                setFocused(programs[i].id);
+                setFocused(galaxies[i].id);
                 console.log("focused on : " + focused);
               }}
-              id={programs[i].id}
-              image={programs[i].image}
-              title={programs[i].title}
-              type={programs[i].type}
-              views={programs[i].views}
+              id={galaxies[i].id}
+              image={"url(" + galaxies[i].image + ")"}
+              title={galaxies[i].title}
+              type={galaxies[i].type}
+              views={galaxies[i].views}
+              focused={isFocused("300", focused, i)}
+              video={galaxies[i].video}
+            ></ProgramCard>
+          );
+        })}
+      </HorizontalList>
+
+      <HorizontalList left="389px">
+        <SectionTitle>인터넷 & TV</SectionTitle>
+        {internets.map(function (a, i) {
+          return (
+            <ProgramCard
+              onClick={() => {
+                setFocused(internets[i].id);
+                console.log("focused on : " + focused);
+              }}
+              id={internets[i].id}
+              image={"url(" + internets[i].image + ")"}
+              title={internets[i].title}
+              type={internets[i].type}
+              views={internets[i].views}
               focused={isFocused("400", focused, i)}
+              video={internets[i].video}
             ></ProgramCard>
           );
         })}

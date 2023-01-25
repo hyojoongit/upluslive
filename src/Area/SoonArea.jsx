@@ -4,6 +4,7 @@ let Area = styled.div`
   position: relative;
   height: 790px;
 `;
+
 let Background = styled.div`
   margin-top: 157px;
   position: absolute;
@@ -14,6 +15,7 @@ let Background = styled.div`
   z-index: -1;
   backdrop-filter: blur(100px);
 `;
+
 let BackgroundImg = styled.div`
   margin-top: 157px;
   position: absolute;
@@ -63,12 +65,14 @@ let Button = styled.button`
   height: 88px;
   color: #aeaeb2;
   background-color: #3e4154;
-  &:hover {
-    height: 100px;
-    color: #090d19;
-    background-color: #eee;
-    transition: ease-in-out 0.15s;
-  }
+  ${(p) =>
+    !p.focused &&
+    css`
+      height: 100px;
+      color: #090d19;
+      background-color: #eee;
+      transition: ease-in-out 0.15s;
+    `}
 `;
 
 function SoonArea({
@@ -88,7 +92,7 @@ function SoonArea({
           <Body>{time}</Body>
           <Title>{title}</Title>
           <Body>{description}</Body>
-          <Button>알림 예약</Button>
+          <Button focused={focused}>알림 예약</Button>
         </Contents>
       </Background>
       <BackgroundImg image={image}></BackgroundImg>

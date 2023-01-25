@@ -1,5 +1,9 @@
 import programData from "../programData.js";
 import soonData from "../soonData.js";
+import iphoneData from "../data/iphoneData.js";
+import galaxyData from "../data/galaxyData.js";
+import internetData from "../data/internetData.js";
+
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProgramCardVertical from "../Card/ProgramCardVertical";
@@ -47,12 +51,16 @@ function Home() {
   let navigate = useNavigate();
   let [programs] = useState(programData);
   let [soons] = useState(soonData);
+  let [iphones] = useState(iphoneData);
+  let [galaxies] = useState(galaxyData);
+  let [internets] = useState(internetData);
+
   let [focused, setFocused] = useState("000");
 
   //***방향키 입력에 따른 focused state 변경***//
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.keyCode === 38 && focused > 0) {
+      if (e.keyCode === 38 && parseInt(focused) % 100 > 0) {
         setFocused(parseToId(parseInt(focused) - 1));
       } else if (e.keyCode === 40) {
         setFocused(parseToId(parseInt(focused) + 1));
@@ -82,7 +90,7 @@ function Home() {
     const element = document.getElementById(focused);
 
     if (element) {
-      console.log("scrollIntoView");
+      console.log("scrollIntoView : ", element);
       console.log("element:", element.getClientRects());
       element.scrollIntoView({
         behavior: "smooth",
@@ -96,9 +104,9 @@ function Home() {
     <div
       style={{
         margin: "0",
-        height: "1080px",
-        width: "fit-content",
-        overflow: "hidden",
+        width: "1920px",
+        height: "100%",
+        overflowY: "hidden",
         display: "flex",
         flexDirection: "row",
         flexWrap: "nowrap",
@@ -167,29 +175,83 @@ function Home() {
         description={soons[0].description}
         section={focusedSection(focused, 100)}
       ></SoonAreaVertical>
-      <VerticalList left="40px">
-        <SectionTitleVertical>LIVE</SectionTitleVertical>
-        {programs.map(function (a, i) {
+      <VerticalList left="12px">
+        <SectionTitleVertical>아이폰</SectionTitleVertical>
+        {iphones.map(function (a, i) {
           return (
             <ProgramCardVertical
               onClick={() => {
-                setFocused(programs[i].id);
+                setFocused(iphones[i].id);
                 console.log(
                   "focused on : " +
                     focused +
                     "focused section : " +
-                    focusedSection(focused, programs[i].id)
+                    focusedSection(focused, iphones[i].id)
                 );
               }}
-              id={programs[i].id}
-              image={"url(" + programs[i].image + ")"}
-              title={programs[i].title}
-              type={programs[i].type}
-              views={programs[i].views}
-              focused={isFocused("000", focused, i)}
-              video={programs[i].video}
-              description={programs[i].description}
-              section={focusedSection(focused, programs[i].id)}
+              id={iphones[i].id}
+              image={"url(" + iphones[i].image + ")"}
+              title={iphones[i].title}
+              type={iphones[i].type}
+              views={iphones[i].views}
+              focused={isFocused("200", focused, i)}
+              video={iphones[i].video}
+              description={iphones[i].description}
+              section={focusedSection(focused, iphones[i].id)}
+            ></ProgramCardVertical>
+          );
+        })}
+      </VerticalList>
+      <VerticalList left="40px">
+        <SectionTitleVertical>갤럭시</SectionTitleVertical>
+        {galaxies.map(function (a, i) {
+          return (
+            <ProgramCardVertical
+              onClick={() => {
+                setFocused(galaxies[i].id);
+                console.log(
+                  "focused on : " +
+                    focused +
+                    "focused section : " +
+                    focusedSection(focused, galaxies[i].id)
+                );
+              }}
+              id={galaxies[i].id}
+              image={"url(" + galaxies[i].image + ")"}
+              title={galaxies[i].title}
+              type={galaxies[i].type}
+              views={galaxies[i].views}
+              focused={isFocused("300", focused, i)}
+              video={galaxies[i].video}
+              description={galaxies[i].description}
+              section={focusedSection(focused, galaxies[i].id)}
+            ></ProgramCardVertical>
+          );
+        })}
+      </VerticalList>
+      <VerticalList left="40px">
+        <SectionTitleVertical>인터넷 & TV</SectionTitleVertical>
+        {internets.map(function (a, i) {
+          return (
+            <ProgramCardVertical
+              onClick={() => {
+                setFocused(internets[i].id);
+                console.log(
+                  "focused on : " +
+                    focused +
+                    "focused section : " +
+                    focusedSection(focused, internets[i].id)
+                );
+              }}
+              id={internets[i].id}
+              image={"url(" + internets[i].image + ")"}
+              title={internets[i].title}
+              type={internets[i].type}
+              views={internets[i].views}
+              focused={isFocused("400", focused, i)}
+              video={internets[i].video}
+              description={internets[i].description}
+              section={focusedSection(focused, internets[i].id)}
             ></ProgramCardVertical>
           );
         })}

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 let TitleArea = styled.p`
   background: linear-gradient(
@@ -9,7 +9,9 @@ let TitleArea = styled.p`
   );
   margin: 0;
   width: 100%;
-  position: fixed;
+  position: sticky;
+  top: 0;
+  left: 0;
   font-size: 40px;
   font-weight: 900;
   color: white;
@@ -19,7 +21,7 @@ let TitleArea = styled.p`
   padding-left: ${(props) => props.left};
   z-index: 3;
 `;
-function SectionTitleVertical({ children, left }) {
+function SectionTitleVertical({ children, left, section }) {
   return <TitleArea left={left}>{children}</TitleArea>;
 }
 

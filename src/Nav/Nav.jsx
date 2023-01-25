@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Navigation = styled.nav`
   width: 266px;
   padding: 20px;
-  margin: 30px 0 0 40px;
+  margin: 20px 0 0 40px;
   background-color: rgb(9, 13, 25, 0.8);
   border-radius: 20px;
   position: fixed;
@@ -15,7 +15,7 @@ const Navigation = styled.nav`
 
 let Logo = styled.img`
   height: 88px;
-  margin: 30px 10px;
+  margin: 20px 10px;
   margin-right: auto;
 `;
 

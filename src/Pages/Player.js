@@ -5,6 +5,8 @@ import { isFocused, parseToId, searchCards } from "../Functions/focusFunctions";
 import { EmojiHappy } from "iconsax-react";
 
 import programData from "../programData.js";
+import iphoneData from "../data/iphoneData.js";
+import galaxyData from "../data/galaxyData.js";
 
 import PlayerCard from "../Card/PlayerCard";
 import ViewCard from "../Player/ViewCard";
@@ -333,9 +335,31 @@ function Player(props) {
   let navigate = useNavigate();
   let { id } = useParams();
   let [programs] = useState(programData);
-  let match = props.programs.find(function (a) {
-    return a.id == id;
-  });
+  let [iphones] = useState(iphoneData);
+  let [galaxies] = useState(galaxyData);
+
+  const matchVideo = (id) => {
+    if (id < 100) {
+      console.log("id : ", id, " 000 ");
+      return programs.find(function (a) {
+        return a.id == id;
+      });
+    } else if (id >= 200 && id < 300) {
+      console.log("id : ", id, " 200 ");
+
+      return iphones.find(function (a) {
+        return a.id == id;
+      });
+    } else if (id >= 300 && id < 400) {
+      console.log("id : ", id, " 300 ");
+
+      return galaxies.find(function (a) {
+        return a.id == id;
+      });
+    }
+  };
+
+  let match = matchVideo(id);
 
   const [focusedCard, setFocusedCard] = useState(1);
   const [showModal, setShowModal] = useState(false);

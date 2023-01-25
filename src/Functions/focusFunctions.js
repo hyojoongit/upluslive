@@ -29,6 +29,10 @@ export function isFocused(line, focused, i) {
     parsed = parseToId(100 + i);
   } else if (line == "200") {
     parsed = parseToId(200 + i);
+  } else if (line == "300") {
+    parsed = parseToId(300 + i);
+  } else if (line == "400") {
+    parsed = parseToId(400 + i);
   }
   return parsed == focused ? true : false;
 }

@@ -9,6 +9,7 @@ let Area = styled.div`
   display: flex;
   border-radius: 20px;
   transition: ease-in-out 0.2s;
+
   ${(p) =>
     !p.section &&
     css`
@@ -68,6 +69,7 @@ let BackgroundImg = styled.div`
     css`
       width: 0;
       opacity: 0;
+      transition: 0s;
       transition-delay: 0;
     `}
 `;
@@ -126,7 +128,7 @@ function SoonArea({
   section,
 }) {
   return (
-    <Area section={section}>
+    <Area section={section} focused={focused}>
       <Background section={section}>
         <Body>{time}</Body>
         <Title>{title}</Title>
